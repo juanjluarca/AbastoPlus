@@ -20,4 +20,9 @@ export class Product {
             new ProductoBaseUnit(baseUnit)
         );
     }
+
+    // Para imprimir el producto de forma legible
+    public toString(): string {
+        return `Product { id: ${this.id.value}, name: ${this.name.value}, baseUnit: ${this.baseUnit.value} }`;
+    }
 }
