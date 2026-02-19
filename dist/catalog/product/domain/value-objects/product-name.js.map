@@ -1,0 +1,1 @@
+{"version":3,"file":"product-name.js","sourceRoot":"","sources":["../../../../../src/catalog/product/domain/value-objects/product-name.ts"],"names":[],"mappings":";;;AAAA,qGAAgG;AAEhG,MAAa,WAAY,SAAQ,uCAAiB;IAC9C,YAAY,KAAa;QACrB,IAAI,KAAK,CAAC,MAAM,IAAI,EAAE,EAAE,CAAC;YACrB,MAAM,IAAI,KAAK,CAAC,wDAAwD,CAAC,CAAC;QAC9E,CAAC;QACD,KAAK,CAAC,KAAK,CAAC,CAAC;IACjB,CAAC;CACJ;AAPD,kCAOC"}
