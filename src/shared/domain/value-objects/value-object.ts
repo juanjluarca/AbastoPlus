@@ -2,6 +2,7 @@ export abstract class ValueObject<T> {
   protected readonly _value: T;
 
   protected constructor(value: T) {
+    this.validate(value);
     this._value = value;
   }
 

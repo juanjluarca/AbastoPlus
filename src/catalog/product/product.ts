@@ -4,9 +4,9 @@ import { ProductoBaseUnit } from "./domain/value-objects/producto-base-unit";
 
 export class Product {
     constructor(
-        private readonly id: ProductId,
-        private readonly name: ProductName,
-        private readonly baseUnit: ProductoBaseUnit
+        public readonly id: ProductId,
+        public readonly name: ProductName,
+        public readonly baseUnit: ProductoBaseUnit
     ) {
         this.id = id;
         this.name = name;
@@ -19,10 +19,5 @@ export class Product {
             new ProductName(name),
             new ProductoBaseUnit(baseUnit)
         );
-    }
-
-    // To String
-    public toString(): string {
-        return `Product [id=${this.id.value}, name=${this.name.value}, baseUnit=${this.baseUnit.value}]`;
     }
 }
