@@ -1,1 +1,40 @@
-node_modules
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# TypeScript
+dist/
+build/
+*.tsbuildinfo
+
+# Archivos JS generados accidentalmente junto a TS
+src/**/*.js
+src/**/*.js.map
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+
+# Cache / tooling
+.cache/
+.eslintcache
+.parcel-cache/
+.turbo/
+.nx/
+
+# IDEs / Editores
+.vscode/
+.idea/
+*.iml
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
