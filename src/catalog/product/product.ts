@@ -12,4 +12,12 @@ export class Product {
         this.name = name;
         this.baseUnit = baseUnit;
     }
+
+    public static build (id: string, name: string, baseUnit: string): Product {
+        return new Product(
+            new ProductId(id),
+            new ProductName(name),
+            new ProductoBaseUnit(baseUnit)
+        );
+    }
 }
