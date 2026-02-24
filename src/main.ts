@@ -1,6 +1,10 @@
 import { Product } from "./catalog/product/product";
+import { connectToDatabase, disconnectFromDatabase } from "./catalog/product/infrastructure/mongo-db";
+import { MongoProductRepository } from "./catalog/product/infrastructure/mongo-product-repository";
 
-try {
+
+async function main() {
+    await connectToDatabase();
     const product = Product.build(
         "123e4567-e89b-12d3-a456-426614174000", // ID debe ser UUID
         "Agua Mineral",
@@ -12,13 +16,10 @@ try {
         ]
     );
 
-    console.log("Producto creado correctamente:");
-    console.log(product.toString());
-    console.log("Presentaciones:");
-    product.presentations.presentations.forEach(p => {
-        console.log(`  - [${p.id.value}] ${p.name.value} | ${p.type.value} | ${p.netQuantity.value} ${p.unitOfMeasure.value}`);
-    });
-} catch (error) {
-    console.error("Error inesperado:", error);
+    const repository = new MongoProductRepository();
+    await repository.save(product);
+
+    await disconnectFromDatabase();
 }
 
+main();
