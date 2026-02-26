@@ -1,24 +1,32 @@
-import { Product } from "./catalog/product/product";
 import { connectToDatabase, disconnectFromDatabase } from "./catalog/product/infrastructure/mongo-db";
 import { MongoProductRepository } from "./catalog/product/infrastructure/mongo-product-repository";
-
+import { SaveProduct } from "./catalog/product/application/use-cases/save-product";
 
 async function main() {
     await connectToDatabase();
-    const product = Product.build(
-        "123e4567-e89b-12d3-a456-426614174000", // ID debe ser UUID
-        "Agua Mineral",
-        "ml",
-        [
-            { id: "pres-001", name: "Botella 500ml", type: "bottle", netQuantity: 500, unitOfMeasure: "ml" },
-            { id: "pres-002", name: "Botella 1000ml",   type: "bottle", netQuantity: 1000, unitOfMeasure: "ml" },
-            { id: "pres-003", name: "Botella 2000ml",   type: "bottle", netQuantity: 2000, unitOfMeasure: "ml" },
+    const productRepository = new MongoProductRepository();
+    const saveProduct = new SaveProduct(productRepository);
+    await saveProduct.execute({
+        id: "1",
+        name: "Product 1 - more than 10 words",
+        baseUnit: "kg",
+        presentations: [
+            {
+                id: "1",
+                name: "Presentation 1",
+                type: "bag",
+                netQuantity: 1,
+                unitOfMeasure: "kg"
+            },
+            {
+                id: "2",
+                name: "Presentation 2",
+                type: "bag",
+                netQuantity: 2,
+                unitOfMeasure: "kg"
+            }
         ]
-    );
-
-    const repository = new MongoProductRepository();
-    await repository.save(product);
-
+    });
     await disconnectFromDatabase();
 }
 
