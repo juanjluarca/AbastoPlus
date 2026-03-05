@@ -1,33 +1,38 @@
-import { connectToDatabase, disconnectFromDatabase } from "./catalog/product/infrastructure/mongo-db";
-import { MongoProductRepository } from "./catalog/product/infrastructure/mongo-product-repository";
-import { SaveProduct } from "./catalog/product/application/use-cases/save-product";
+import 'reflect-metadata';
+import { container } from './container';
+import { TYPES } from './types';
+import { DatabaseConnection } from './shared/domain/database-connection';
+import { SaveProduct } from './catalog/product/application/use-cases/save-product';
 
 async function main() {
-    await connectToDatabase();
-    const productRepository = new MongoProductRepository();
-    const saveProduct = new SaveProduct(productRepository);
+    const databaseConnection = container.get<DatabaseConnection>(TYPES.DatabaseConnection);
+    await databaseConnection.connect();
+
+    const saveProduct = container.get<SaveProduct>(SaveProduct);
+
     await saveProduct.execute({
         id: "1",
-        name: "Product 1 - more than 10 words",
-        baseUnit: "kg",
+        name: "Arroz de grano largo",
+        baseUnit: "lb",
         presentations: [
             {
                 id: "1",
                 name: "Presentation 1",
                 type: "bag",
-                netQuantity: 1,
-                unitOfMeasure: "kg"
+                netQuantity: 5,
+                unitOfMeasure: "lb"
             },
             {
                 id: "2",
                 name: "Presentation 2",
-                type: "bag",
-                netQuantity: 2,
-                unitOfMeasure: "kg"
+                type: "box",
+                netQuantity: 20,
+                unitOfMeasure: "lb"
             }
         ]
     });
-    await disconnectFromDatabase();
+
+    await databaseConnection.disconnect();
 }
 
 main();

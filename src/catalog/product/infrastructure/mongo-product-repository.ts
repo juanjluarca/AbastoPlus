@@ -1,3 +1,4 @@
+import { injectable } from 'inversify';
 import { prop, getModelForClass, modelOptions } from '@typegoose/typegoose';
 import { Product } from "../product";
 import { Presentation } from "../domain/entities/presentation";
@@ -37,6 +38,7 @@ class ProductSchema {
 
 const ProductModel = getModelForClass(ProductSchema);
 
+@injectable()
 export class MongoProductRepository implements ProductRepository {
 
     async save(data: Product): Promise<void> {

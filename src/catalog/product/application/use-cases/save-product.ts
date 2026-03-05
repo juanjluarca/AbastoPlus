@@ -1,10 +1,13 @@
 // Obtiene como atributo un ProductRepository, tiene el método execute que recibe primitivos de un producto
 // ProductRepository recibe un Product
+import { inject, injectable } from 'inversify';
 import { ProductRepository } from "../product-repository";
 import { Product } from "../../product";
+import { TYPES } from '../../../../types';
 
+@injectable()
 export class SaveProduct {
-    constructor(private productRepository: ProductRepository) {
+    constructor(@inject(TYPES.ProductRepository) private productRepository: ProductRepository) {
         this.productRepository = productRepository;
     }
     
