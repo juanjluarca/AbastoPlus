@@ -4,11 +4,16 @@ import { inject, injectable } from 'inversify';
 import { ProductRepository } from "../product-repository";
 import { Product } from "../../product";
 import { TYPES } from '../../../../types';
+import { TranslationService } from '../ports/translation-service';
+
 
 @injectable()
 export class SaveProduct {
-    constructor(@inject(TYPES.ProductRepository) private productRepository: ProductRepository) {
-        this.productRepository = productRepository;
+    constructor(
+        @inject(TYPES.ProductRepository) 
+        private productRepository: ProductRepository,
+        @inject(TYPES.TranslationService)
+        private translationService: TranslationService) {
     }
     
     async execute(data: {
@@ -23,7 +28,8 @@ export class SaveProduct {
             unitOfMeasure: string;
         }[];
     }): Promise<void> {
-        const product = Product.build(data.id, data.name, data.baseUnit, data.presentations);
+        const translatedName = await this.translationService.translate(data.name, "es");
+        const product = Product.build(data.id, translatedName, data.baseUnit, data.presentations);
         await this.productRepository.save(product);
     }
 }
