@@ -12,7 +12,7 @@ async function main() {
 
     await saveProduct.execute({
         id: "1",
-        name: "Arroz de grano largo",
+        name: "Large Bag of Potatoe Chips",
         baseUnit: "lb",
         presentations: [
             {
