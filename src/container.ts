@@ -5,6 +5,7 @@ import { MongoProductRepository } from './catalog/product/infrastructure/mongo-p
 import { DatabaseConnection } from './shared/domain/database-connection';
 import { MongoDatabaseConnection } from './catalog/product/infrastructure/mongo-database-connection';
 import { SaveProduct } from './catalog/product/application/use-cases/save-product';
+import { TranslateProduct } from './catalog/product/application/use-cases/translate-product';
 import { TranslationService } from './catalog/product/application/ports/translation-service';
 import { DeepLTranslationService } from './catalog/product/infrastructure/deepl-translator';
 import { EventBus } from './shared/domain/event-bus';                        
@@ -17,5 +18,6 @@ container.bind<DatabaseConnection>(TYPES.DatabaseConnection).to(MongoDatabaseCon
 container.bind<TranslationService>(TYPES.TranslationService).to(DeepLTranslationService).inSingletonScope();
 container.bind<EventBus>(TYPES.EventBus).to(InMemoryEventBus).inSingletonScope();
 container.bind<SaveProduct>(SaveProduct).toSelf();
+container.bind<TranslateProduct>(TranslateProduct).toSelf();
 
 export { container };
