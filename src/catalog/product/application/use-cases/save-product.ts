@@ -29,8 +29,7 @@ export class SaveProduct {
       unitOfMeasure: string;
     }[];
   }): Promise<void> {
-    const translatedName = await this.translationService.translate(data.name, 'es');
-    const product = Product.build(data.id, translatedName, data.baseUnit, data.presentations);
+    const product = Product.build(data.id, data.name, data.baseUnit, data.presentations);
     await this.productRepository.save(product);
 
     // Emitir evento después de guardar

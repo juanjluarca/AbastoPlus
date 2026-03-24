@@ -2,5 +2,7 @@ import { Product } from "../product";
 
 // Interface para repositorio de producto en BD (puede ser MongoDB, SQL, etc.)
 export interface ProductRepository {
-    save(data: Product): Promise<void>;
+  save(data: Product): Promise<void>;
+  findById(id: string): Promise<Product | null>;
+  update(data: Product): Promise<void>;
 }
