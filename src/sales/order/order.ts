@@ -11,14 +11,17 @@ export type OrderStatus = typeof OrderStatus[keyof typeof OrderStatus];
 export interface OrderItem {
   productId: string;
   quantity: number;
+  price: number;
 }
 
 export class Order {
+  public readonly id: string;
   public readonly customerId: CustomerId;
   public readonly items: OrderItem[];
   private _status: OrderStatus;
 
-  private constructor(customerId: CustomerId, status: OrderStatus, items: OrderItem[]) {
+  private constructor(id: string, customerId: CustomerId, status: OrderStatus, items: OrderItem[]) {
+    this.id = id;
     this.customerId = customerId;
     this._status = status;
     this.items = items;
@@ -28,8 +31,14 @@ export class Order {
     return this._status;
   }
 
-  public static create(customerId: CustomerId): Order {
-    return new Order(customerId, OrderStatus.Draft, []);
+  public get total(): { amount: number } {
+    return {
+      amount: this.items.reduce((sum, item) => sum + item.price * item.quantity, 0),
+    };
+  }
+
+  public static create(id: string, customerId: CustomerId): Order {
+    return new Order(id, customerId, OrderStatus.Draft, []);
   }
 
   public addItem(item: OrderItem): void {
@@ -50,7 +59,7 @@ export class Order {
     this._status = OrderStatus.Cancelled;
   }
 }
-
+ 
 
 export class InvalidOrderStateError extends Error {
   constructor(message: string) {
