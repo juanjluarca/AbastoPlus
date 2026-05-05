@@ -3,7 +3,6 @@ import { OrderStatus } from "../../../sales/order/order";
 import { CustomerId } from "../../../customers/customer/domain/value-objects/customer-id";
 import { OrderMother } from "../../../sales/order/order-mother";
 import { InvalidOrderStateError, InvalidQuantityError } from "../../../sales/order/order";
-import { create } from "node:domain";
 
 
 describe("Order tests", () => {
@@ -16,7 +15,7 @@ describe("Order tests", () => {
 
   it("adds item to order", () => {
     const order = createDraftOrder();
-    const item = { productId: "prod-456", quantity: 2 };
+    const item = { productId: "prod-456", quantity: 2, price: 10 };
 
     order.addItem(item);
 
@@ -42,7 +41,7 @@ describe("Order tests", () => {
     const order = createCancelledOrder();
 
     expect(() => {
-      order.addItem({ productId: "prod-789", quantity: 1 });
+      order.addItem({ productId: "prod-789", quantity: 1, price: 10 });
     }).toThrow(InvalidOrderStateError);
   });
 
@@ -50,7 +49,7 @@ describe("Order tests", () => {
     const order = createDraftOrder();
     
     expect(() => {
-      order.addItem({ productId: "prod-789", quantity: 0 });
+      order.addItem({ productId: "prod-789", quantity: 0, price: 10 });
     }).toThrow(InvalidQuantityError);
   })
 
@@ -71,7 +70,7 @@ function createConfirmedOrder() {
 function createOrderWithItems(n: number) {
   const order = OrderMother.withItems(n);
   return order;
-}
+} 
 
 function createCancelledOrder() {
   const order = OrderMother.createCancelled();
